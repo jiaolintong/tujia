@@ -1,10 +1,12 @@
 <template>
   <div id='mheader'>
-      <img src="" alt="">
-      <p>首页</p>
-      <p>发现</p>
-      <p>登录</p>
-      <p>注册</p>
+    <div id="top">
+      <ul>
+        <li v-for='(item,index) in list'
+        :key=index
+        >{{item}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -12,7 +14,8 @@ export default {
   name:'mheader',
   data(){
     return{
-      name:'123'
+      list:["首页","发现","注册","登录"],
+
     }
   }
 }
@@ -22,19 +25,28 @@ export default {
 @import '~style/index.less';
 //样式使用别名要加~
 #mheader{
-  position: relative;
-  z-index: 1;
-  background: @bg-black;
-  .w(375);
-  .h(44);
-  .l_h(44);
-  text-align: center;
-  color:@fc-yellow;
-  font-size: @fs-l;
-  .img{
-    .w(40);
-    .h(40);
-    
+  #top{
+      position: relative;
+      z-index: 1;
+      background: @bg-black;
+      .w(375);
+      .h(40);
+      .l_h(40);
+      color:@fc-yellow;
+      font-size: @fs-l;
+      ul{
+      .w(375);
+      .h(40);
+      .l_h(40);
+      display: flex;
+      text-align: center;
+      li{
+        width:25%;
+      }
+      }
+      
+      
   }
+ 
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
       <m-header></m-header>
+      <banner></banner>
       <tab></tab>
       <router-view></router-view>
   </div>
@@ -9,10 +10,12 @@
 <script>
 import  Tab from 'base/tab'
 import MHeader from  'base/mheader'
+import Banner from  'base/banner'
+
 export default {
   name: 'app',
   components: {
-   Tab,MHeader
+   Tab,MHeader,Banner
   },
   created(){
     
