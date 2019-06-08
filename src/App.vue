@@ -3,7 +3,6 @@
       <m-header></m-header>
       <tab></tab>
       <router-view></router-view>
-  
   </div>
 </template>
 
@@ -13,7 +12,7 @@ import MHeader from  'base/mheader'
 export default {
   name: 'app',
   components: {
-   Tab,MHeader,
+   Tab,MHeader
   },
   created(){
     
