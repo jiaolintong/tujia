@@ -5,7 +5,7 @@
              v-for="(item ,index) in  banners"
              :key="index"
         >
-          <img :src="item.picUrl" alt="">
+          <img :src="item" alt="">
         </div>
     </div>
   </div>
@@ -16,30 +16,36 @@ export default {
   name:'banner',
   data(){
     return{
-      banners:[]
+      banners:['https://nmstatic.tujia.com/static/images/index/home/banner_bg1.jpg','https://nmstatic.tujia.com/static/images/index/home/banner_bg2.jpg']
     }
   },
   methods: {
     initBanner(){
       new Swiper('.swiper-container',{
-            loop:true
+            loop:true,
+            autoplay:true
           })
     }
   },
-  created(){
-    console.log(this)
-    this.$axios.get('/api/fcj/recommend/banner')
-    .then((res)=>{
+//   created(){
+//     console.log(this)
+//     this.$axios.post('/api/bingo/h5/portal/getPortal')
+//     .then((res)=>{
+// console.log(res)
+//       this.banners=res.data
+//       this.$nextTick(()=>{
+//         this.initBanner()
+//       })
+//     })
+//     .catch((err)=>{
+//       console.log(err)
+//     })
+//   }
+mounted() {
+this.initBanner();
 
-      this.banners=res.data.slider
-      this.$nextTick(()=>{
-        this.initBanner()
-      })
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  }
+  
+},
 }
 </script>
 <style lang="less" scoped>
@@ -47,7 +53,8 @@ export default {
 @import '~style/index.less';
 .swiper-container{
   .w(375);
-  .h(150);
+  .h(280);
+  overflow: hidden;
   img{
     width: 100%;
     height: 100%;
