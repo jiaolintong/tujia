@@ -13,7 +13,7 @@ export default{
          if(!this.$refs.wrapper){
              return false
          }
-         this.scroll=new BScroll(this.$refs.wrapper)
+         this.scroll=new BScroll(this.$refs.wrapper,{click:true})
      } 
   },
   watch:{
