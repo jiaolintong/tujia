@@ -1,186 +1,215 @@
 <template>
   <div id="detail">
     <Scroll>
-      <div class="wrapper">
-        <div class="header">
-          <div class="back">
-            <span></span>
-          </div>
-          <h4>房屋详情</h4>
-          <span class="more"></span>
-        </div>
-        <!-- 轮播图 -->
-        <div class="swiper swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" 
-                v-for="(item,index) in detailCons.pictureList"
-                :key='index'>
-              <img :src="item.url" alt="">
-            </div>
-          </div>
-          <div class="swiper-index">
-            <span>{{index+1}}/{{detailCons.pictureList.length}}</span>
-          </div>
-        </div>
-        <div class="content">
-          <div class="house-desc">
-            <h3>{{detailCons.unitName}}</h3>
-            <ul>
-              <li 
-                v-for="(item,index) in detailCons.houseTags"
-                :key="index">{{item.tagName}}<span>·</span></li>
-            </ul>
-          </div>
-          <div class="house-detail">
-            <div class="house-left">
+      <div>
+        <div class="wrapper" v-if='!statePraise'>
+          <div class="header">
+            <div class="back">
               <span></span>
-              <h4>{{detailCons.roomCountSummary}}</h4>
-              <p>{{detailCons.unitSimpleIntros[0]}}</p>
-              <p>{{detailCons.unitSimpleIntros[1]}}</p>
             </div>
-            <div class="house-right">
-              <span></span>
-              <h4>{{detailCons.bedSummary}}</h4>
-              <p>{{detailCons.bedDescriptions[0]}}</p>
-              <p>{{detailCons.bedDescriptions[1]}}</p>
+            <h4>房屋详情</h4>
+            <span class="more"></span>
+          </div>
+          <!-- 轮播图 -->
+          <div class="swiper swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" 
+                  v-for="(item,index) in detailCons.pictureList"
+                  :key='index'>
+                <img :src="item.url" alt="">
+                <div class="swiper-index">
+                  <span>{{index+1}}/{{detailCons.pictureList.length}}</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="house-master">
-            <img :src="detailCons.landlordInfo.logoUrl" alt="">
-            <div class="hm-con">
-              <h4>{{detailCons.landlordInfo.hotelName}}</h4>
+          <div class="content">
+            <div class="house-desc">
+              <h3>{{detailCons.unitName}}</h3>
+              <ul>
+                <li 
+                  v-for="(item,index) in detailCons.houseTags"
+                  :key="index">{{item.tagName}}<span>·</span></li>
+              </ul>
+            </div>
+            <div class="house-detail">
+              <div class="house-left">
+                <span></span>
+                <h4>{{detailCons.roomCountSummary}}</h4>
+                <p>{{detailCons.unitSimpleIntros[0]}}</p>
+                <p>{{detailCons.unitSimpleIntros[1]}}</p>
+              </div>
+              <div class="house-right">
+                <span></span>
+                <h4>{{detailCons.bedSummary}}</h4>
+                <p>{{detailCons.bedDescriptions[0]}}</p>
+                <p>{{detailCons.bedDescriptions[1]}}</p>
+              </div>
+            </div>
+            <div class="house-master">
+              <img :src="detailCons.landlordInfo.logoUrl" alt="">
+              <div class="hm-con">
+                <h4>{{detailCons.landlordInfo.hotelName}}</h4>
+                <p>
+                  <span>{{detailCons.businessTypeName}}&nbsp;&nbsp;</span>
+                  
+                  <span>·&nbsp;&nbsp;{{detailCons.landlordInfo.verifiedDetail}}</span>
+                </p>
+              </div>
+            </div>
+            <!-- 评分 -->
+            <div class='star'>
+              <div class="star-left">
+                <h3>{{detailCons.unitCommentSummary.traffic}}.0</h3>
+                <div>
+                  <span 
+                      v-for="(item,index) in detailCons.unitCommentSummary.traffic"
+                      :key='index'>★</span>
+                  <p class="good">{{detailCons.unitCommentSummary.scoreTitle}}</p>
+                </div>
+              </div>
+              <div class="star-right" @click='praiseShow(true)'>
+                <p>查看全部<span>{{detailCons.unitCommentSummary.recommendedCount}}条</span>评论</p>
+              </div>
+            </div>
+            <!-- 评价 -->
+            <div class='topic'>
               <p>
-                <span>{{detailCons.businessTypeName}}&nbsp;&nbsp;</span>
-                
-                <span>·&nbsp;&nbsp;{{detailCons.landlordInfo.verifiedDetail}}</span>
+                <img :src="praiseInfo[0].customerAvatarUrl" alt="">
+                <span>{{praiseInfo[0].name}}</span>
+                <span class="date">{{praiseInfo[0].submitDate}}</span>
               </p>
+              <p class="praDesc">{{praiseInfo[0].commentDetail}}</p>
             </div>
           </div>
-          <!-- 评分 -->
-          <div class='star'>
-            <div class="star-left">
-              <h3>{{detailCons.unitCommentSummary.traffic}}</h3>
-              <div>
-                <span 
-                    v-for="(item,index) in detailCons.unitCommentSummary.traffic"
-                    :key='index'>★</span>
-                <p class="good">{{detailCons.unitCommentSummary.scoreTitle}}</p>
+          <!-- 房屋介绍 -->
+            <div class="house-introduce">
+              <!-- 位置 -->
+              <div class='house house-pos'>
+                <h3>房屋位置</h3>
+                <div class="map">
+                  <img src="https://api.map.baidu.com/staticimage?width=670&height=200&center=104.090389,30.652627&zoom=16&markers=104.090389,30.652627&markerStyles=-1,https://staticfile.tujia.com/mobile/images/h5/housedetail/mapicon.png" alt="">
+                </div>
+                <span class="pos-icon"></span>
+                <h4>{{detailCons.address}}</h4>
+                <section :class="statePos? 'overflow':''">
+                  {{detailCons.introduction}} 
+                </section>
+                <p class='toggle' @click='togglePos'>{{statePos? '展开全部': '收起'}}</p>
               </div>
-            </div>
-            <div class="star-right">
-              <p>查看全部<span>{{detailCons.unitCommentSummary.recommendedCount}}条</span>评论</p>
-            </div>
-          </div>
-          <!-- 评价 -->
-          <div class='topic'></div>
-         </div>
-         <!-- 房屋介绍 -->
-          <div class="house-introduce">
-            <!-- 位置 -->
-            <div class='house house-pos'>
-              <h3>房屋位置</h3>
-              <div class="map">
-                <img src="https://api.map.baidu.com/staticimage?width=670&height=200&center=104.090389,30.652627&zoom=16&markers=104.090389,30.652627&markerStyles=-1,https://staticfile.tujia.com/mobile/images/h5/housedetail/mapicon.png" alt="">
+              <!-- 详情 -->
+              <div class="house house-details">
+                <h3>房屋详情</h3>
+                <h4>{{detailCons.unitTrafficInfos[0].title}}</h4>
+                <section :class="stateDet? 'overflow':''">
+                  <!-- {{decStr}}      -->
+                  {{detailCons.unitTrafficInfos[0].introduction}} 
+                </section>
+                <p class='toggle' @click='toggleDet'>{{stateDet? '展开全部': '收起'}}</p>
               </div>
-              <span class="pos-icon"></span>
-               <h4>{{detailCons.address}}</h4>
-              <section :class="statePos? 'overflow':''">
-                {{detailCons.introduction}} 
-              </section>
-              <p class='toggle' @click='togglePos'>{{statePos? '展开全部': '收起'}}</p>
-            </div>
-            <!-- 详情 -->
-            <div class="house house-details">
-              <h3>房屋详情</h3>
-              <h4>{{detailCons.unitTrafficInfos[0].title}}</h4>
-              <section :class="stateDet? 'overflow':''">
-                <!-- {{decStr}}      -->
-                {{detailCons.unitTrafficInfos[0].introduction}} 
-              </section>
-               <p class='toggle' @click='toggleDet'>{{stateDet? '展开全部': '收起'}}</p>
-            </div>
-            <!-- 服务 -->
-            <div class="house house-server">
-              <h3>设施服务</h3>
-              <div :class='stateSer? "toggleSer":""'>
-                <div class='serve-kind'
-                  v-for='(item,index) in detailCons.unitFacilityGroups'
-                  :key='index'
-                  >
-                  <h4>{{item.groupName}}</h4>
+              <!-- 服务 -->
+              <div class="house house-server">
+                <h3>设施服务</h3>
+                <div :class='stateSer? "toggleSer":""'>
+                  <div class='serve-kind'
+                    v-for='(item,index) in detailCons.unitFacilityGroups'
+                    :key='index'
+                    >
+                    <h4>{{item.groupName}}</h4>
+                    <ul>
+                      <li 
+                        v-for='(itemServe,index) in item.unitFacilities'
+                        :key='index'>
+                        <p class='icon'></p>
+                        <p class='serverName'>{{itemServe.name}}</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <p class='toggle' @click='toggleSer'>{{stateSer? '展开全部': '收起'}}</p>
+              </div>
+              <!-- 日期 -->
+              <div class="house house-data"></div>
+              <!-- 规则 -->
+              <div class="house house-rule"></div>
+              <!-- 须知 -->
+              <div class='house-know'>
+                <div class='house house-item'>
+                  <h3>入住须知</h3>
                   <ul>
-                    <li 
-                      v-for='(itemServe,index) in item.unitFacilities'
+                    <li v-for="(item,index) in detailCons.checkInRules[0].items"
                       :key='index'>
-                      <p class='icon'></p>
-                      <p class='serverName'>{{itemServe.name}}</p>
-                    </li>
+                      <span :class="item.isDeleted? 'true':'false'"></span>
+                      {{item.introduction}}</li>
                   </ul>
                 </div>
-              </div>
-              <p class='toggle' @click='toggleSer'>{{stateSer? '展开全部': '收起'}}</p>
-            </div>
-            <!-- 日期 -->
-            <div class="house house-data"></div>
-            <!-- 规则 -->
-            <div class="house house-rule"></div>
-            <!-- 须知 -->
-            <div class='house-know'>
-              <div class='house house-item'>
-                <h3>入住须知</h3>
-                <ul>
-                  <li v-for="(item,index) in detailCons.checkInRules[0].items"
+                <div class='house house-clear'>
+                  <p v-for="(item,index) in detailCons.checkInRules[1].items"
                     :key='index'>
-                    <span :class="item.isDeleted? 'true':'false'"></span>
-                    {{item.introduction}}</li>
-                </ul>
-              </div>
-              <div class='house house-clear'>
-                <p v-for="(item,index) in detailCons.checkInRules[1].items"
-                  :key='index'>
-                  <span>{{item.introduction}}：</span>
-                  <span>{{item.tip}}</span>
-                </p>
-              </div>
-              <div class="otherInfo">
-                <div class="other">
-                  <h3>
-                    <span>额外费用</span>
-                    <span>额外费用不包含在总房费内，由房东线下收取并自行开票</span>
-                  </h3>
+                    <span>{{item.introduction}}：</span>
+                    <span>{{item.tip}}</span>
+                  </p>
                 </div>
-                <p v-for="(item,index) in detailCons.checkinOtherInfo"
-                  :key='index'>
-                  <span>{{item.title}}：</span>
-                  <span>{{item.items[0].introduction}}</span>
-                </p>
+                <div class="otherInfo">
+                  <div class="other">
+                    <h3>
+                      <span>额外费用</span>
+                      <span>额外费用不包含在总房费内，由房东线下收取并自行开票</span>
+                    </h3>
+                  </div>
+                  <p v-for="(item,index) in detailCons.checkinOtherInfo"
+                    :key='index'>
+                    <span>{{item.title}}：</span>
+                    <span>{{item.items[0].introduction}}</span>
+                  </p>
+                </div>
               </div>
-            </div>
-            <!-- 价格 -->
-            <div class="house house-price">
-              <h4></h4>
+              <!-- 价格 -->
+              <div class="house house-price">
+                <h4></h4>
 
+              </div>
             </div>
-          </div>
-          <!-- 相似房屋 -->
-          <div class='similar'>
-            <h3>周边相似房屋</h3>
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide" 
-                    v-for="(item,index) in similarInfo"
-                    :key='index'>
-                  <div class='swiper-item'>
-                    <img :src="item.pictureURL" alt="" class='imgPic'>
-                    <span>￥{{item.finalPrice}}</span>
-                    <img :src="item.logoUrl" alt="" class="logoUrl">
-                  </div>  
-                  <h4>{{item.unitName}}</h4>
-                  <p>{{item.unitSummary}}</p>
+            <!-- 相似房屋 -->
+            <div class='similar'>
+              <h3>周边相似房屋</h3>
+              <div class="swiper-container">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide" 
+                      v-for="(item,index) in similarInfo"
+                      :key='index'>
+                    <div class='swiper-item'>
+                      <img :src="item.pictureURL" alt="" class='imgPic'>
+                      <span>￥{{item.finalPrice}}</span>
+                      <img :src="item.logoUrl" alt="" class="logoUrl">
+                    </div>  
+                    <h4>{{item.unitName}}</h4>
+                    <p>{{item.unitSummary}}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+        </div>
+        <div class="praise" v-else>
+          <Scroll>
+            <div>
+              <h3>客房点评<span @click='praiseShow(false)'>×</span></h3>
+              <div class='praiseItem' v-for="(item,index) in praiseInfo"
+                :key='index'>
+                <p>
+                  <img :src="item.customerAvatarUrl" alt="">
+                  <span>{{item.name}}</span>
+                  <span class="date">{{item.submitDate}}</span>
+                </p>
+                <p class="star">{{item.totalScore}}分</p>
+                <p class="praDesc">{{item.commentDetail}}</p>
+                <div class='reply'>
+                  <p><span class='land-answer'>房东回复：</span>{{item.replyContent}}</p>
+                </div>
+              </div>
+            </div>
+          </Scroll>
+        </div>
       </div>
     </Scroll>
   </div>
@@ -197,9 +226,11 @@ export default {
     return{
       detailCons:[],
       similarInfo:[],
+      praiseInfo:[],
       statePos:true,
       stateDet:true,
-      stateSer:true
+      stateSer:true,
+      statePraise:false
     }
   },
   methods:{
@@ -211,6 +242,9 @@ export default {
     },
     toggleSer(){
       this.stateSer = !this.stateSer;
+    },
+    praiseShow(state){
+      this.statePraise = state;
     },
     initData(){
       let localData = Local.get('detailCons');
@@ -237,12 +271,26 @@ export default {
        this.$axios.post('https://m.tujia.com/bingo/h5/unit/GetSimilarUnits',
        {"unitId": "176981"})
        .then((res)=>{
-         console.log('////////',res,res.data);
+         console.log(res,res.data);
          Local.set("similarInfo",res.data,20000);
           this.similarInfo = res.data;
           this.$nextTick(()=>{
             this.initBanner();
           })
+       })
+     }
+    },
+    initPraise(){
+      let localData = Local.get('praiseInfo');
+      if(localData){
+       this.praiseInfo = localData;
+      }else{
+       this.$axios.post('https://m.tujia.com/bingo/h5/comment/searchUnitComments',
+       {unitId: 176981, pageIndex: 0, pageSize: 10})
+       .then((res)=>{
+         console.log('////////',res,res.data);
+         Local.set("praiseInfo",res.data,20000);
+          this.praiseInfo = res.data;
        })
      }
     },
@@ -256,6 +304,7 @@ export default {
   created(){
     this.initData();
     this.initSimilar();
+    this.initPraise();
   }
 }
 </script>
@@ -301,9 +350,18 @@ export default {
     .swiper{
       .w(375);
       .h(250);
+      position:relative;
       img{
         width:100%;
         display:block;
+      }
+      .swiper-index{
+        font-size:@fs-s;
+        color:#fff;
+        position:absolute;
+        z-index:5;
+        .bottom(15);
+        .right(20);
       }
     }
     .content{
@@ -389,6 +447,7 @@ export default {
           display:flex;
           h3{
             font-size:35px;
+            font-weight:400;
             .m_r(9);
           }
           div{
@@ -405,6 +464,32 @@ export default {
            span{
              color:#fd8238;
            }
+        }
+      }
+      .topic{
+        .margin(25,0,25,0);
+        p{
+          display:block;
+          font-size:@fs-xs;
+          .l_h(19);
+          color:#333;
+          overflow: hidden;
+          img{
+            width: 34px;
+            height: 34px;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            overflow: hidden;
+            display: block;
+            float: left;
+            margin-right: 10px;
+          }
+          span{
+            display:block;
+          }
+          .date{
+            color:#666;
+          }
         }
       }
     }
@@ -546,7 +631,8 @@ export default {
       }
     }
     .similar{
-      .m_l(20);
+      .w(315);
+      .m_l(30);
       .swiper-item{
         position:relative;
       }
@@ -580,13 +666,13 @@ export default {
         border-radius: 50%;
         border: 2px solid #fff;
         position: absolute;
-        .bottom(-30);
-        .right(40);
+        .bottom(-25);
+        .right(20);
       }
       h4{
         font-size: @fs-m;
         color: #333;
-        width: 95%;
+        .padding(16,50,0,0);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -614,5 +700,66 @@ export default {
   .toggleSer{
     .h(150);
     overflow: hidden;
+  }
+  .praise{
+    position:fixed;
+    .top(0);
+    .bottom(0);
+    .padding(0,20,0,20);
+    h3{
+      font-size:@fs-l;
+      .l_h(28);
+      color:#999;
+      .margin(30,20,20,20);
+      span{
+        float:right;
+      }
+    }
+    .praiseItem{
+      .padding(20,0,20,0);
+    }
+    p{
+      display:block;
+      font-size:@fs-xs;
+      .l_h(19);
+      color:#333;
+      overflow: hidden;
+      img{
+        width: 34px;
+        height: 34px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        overflow: hidden;
+        display: block;
+        float: left;
+        margin-right: 10px;
+      }
+      span{
+        display:block;
+      }
+      .date{
+        color:#666;
+      }
+    }
+    .star{
+      .margin(12,0,8,0);
+    }
+    .reply{
+      width: 100%;
+      .l_h(20);
+      .padding(10,11,10,11);
+      .m_t(28);
+      box-sizing: border-box;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      position: relative;
+      background-color: #f7f9fa;
+    }
+    .land-answer{
+      display:inline;
+      color:#fd8238;
+    }
   }
 </style>

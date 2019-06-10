@@ -21,10 +21,10 @@ export default {
                 <img :src="lists.pictureUrl" alt="" >
                 <p class="title">{{list.name}}</p>
                 <img :src="list.pictureUrl" alt="" >
-                <p class="title">发现公寓</p>
+                <p class="title">坑现公寓</p>
                 <div
                  v-for="(item,index) in live"
-                 :key='index'
+                 :key='index' @click="goDetail"
                 >
                   <img :src="item.defaultPicUrl" alt="">
                   <div class="present">
@@ -33,8 +33,6 @@ export default {
                     <p class="uscore">{{item.unitSummary}}</p>
                   </div>
                 </div>
-                
-                
             </div>
         </div>
         </Scroll>
@@ -59,6 +57,10 @@ export default {
         }
     },
     methods: {
+        goDetail(){
+          alert()
+          this.$router.push({path:'/recommend/detail'});
+        },
         initLists(){
             this.$axios.post('/api/bingo/h5/portal/getPortal')
             .then((res)=>{

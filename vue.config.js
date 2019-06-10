@@ -8,7 +8,7 @@ module.exports={
   devServer:{
     port:8888,
     proxy:{
-      '/api':{
+      '/api':{ 
         target:'http://m.tujia.com',
         changeOrigin:true,
         pathRewrite:{
