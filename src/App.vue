@@ -7,7 +7,7 @@
       <tab></tab>
       <router-view></router-view> -->
 
-    <Home></Home>
+    <!-- <Home></Home> -->
   </div>
 </template>
 
