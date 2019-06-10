@@ -30,7 +30,6 @@ export default{
 <style lang="less" scoped>
 @import '~style/index.less';
 #scroll{
-    color:#fff;
     height:100%;
     width:100%;
 }

@@ -3,22 +3,19 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 import  Home  from  'pages/Home/home.vue'
-import  Rank  from  'pages/Rank/Rank'
+import Handbook from 'pages/handbook/handbook'
 export default new Router({
   mode:'history',
   routes:[
     {
       path:'/home',
       component:Home,
-      // children:[
+       children:[
       //   {
       //     path:'scrap',
       //     component:Scrap
       //   },
-      //   {
-      //     path:'handbook',
-      //     component:Handbook
-      //   },
+        
       //   {
       //     path:'sale',
       //     conponent:Sale
@@ -27,12 +24,12 @@ export default new Router({
       //     path:'detail',
       //     conponent:Detail
       //   }
-      //]
-    },
-    
-    {
-      path:'/Rank',
-      component:Rank
+          {
+          path:'handbook',
+          component:Handbook,
+          name:'handbook'
+          },
+      ]
     },
     {
       path:'/',

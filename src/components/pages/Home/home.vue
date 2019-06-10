@@ -5,13 +5,15 @@
         <m-header></m-header>
         <banner></banner>
             <div class="home_1">
-                <!-- <p class="title">{{lists.name}}</p>
-                <img src="https://pic.tujia.com/upload/mobileconfig/day_190403/201904031157356821.jpg" alt="" > -->
+                 <p class="title">周四特卖</p>
+                <img src="https://pic.tujia.com/upload/mobileconfig/day_190403/201904031157356821.jpg" alt="" 
+               
+                >
                 <p class="title">{{list.name}}</p>
                 <img :src="list.pictureUrl" alt="" >
                 <p class="title">发现公寓</p>
                 <listfirst></listfirst>
-                
+                <router-view></router-view> 
             </div>
         </div>
         </Scroll>
@@ -44,24 +46,23 @@ export default {
             console.log(this.lists)
             })
         },
+        // handbook(home){
+        //   this.$router.push({path:'/home/handbook',query:{home}})
+        // }
     },
       created(){
          setTimeout(()=>{
            this.initLists();
+           
            //this.initList();
-         },30)
+         },1000)
     
 
   },
   mounted() {
-        //this.initLists();
-          //this.initList();
+        // this.handbook();
   },
-//   watch: {
-//       lists(){
-//         this.initLists();
-//       }
-//   },
+
 }
 </script>
 <style lang="less" scoped>

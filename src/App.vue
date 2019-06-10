@@ -2,20 +2,23 @@
   <div id="app">
       
       <router-view></router-view>
-  
+     <!--  <m-header></m-header>
+      <banner></banner>
+      <tab></tab>
+      <router-view></router-view> -->
+
+    <Home></Home>
   </div>
 </template>
 
 <script>
-// import  Tab from 'base/tab'
-
-
 export default {
   name: 'app',
   components: {
+  
   },
   created(){
-    
+  
   }
 }
 </script>
